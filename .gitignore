@@ -1,0 +1,31 @@
+node_modules
+
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+#demo app
+
+# dependencies
+/demo/node_modules
+/demo/.pnp
+/demo/.pnp.js
+
+# testing
+/deom/coverage
+
+# production
+/demo/build
+
+# misc
+/demo/.DS_Store
+/demo/.env.local
+/demo/.env.development.local
+/demo/.env.test.local
+/demo/.env.production.local
+
+/demo/npm-debug.log*
+/demo/yarn-debug.log*
+/demo/yarn-error.log*

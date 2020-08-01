@@ -1,0 +1,318 @@
+@import 'mixins';
+
+.modal-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 50;
+
+	&.mobile-full {
+		@include media {
+			.modal-contentwrap {
+				max-width: 100%;
+				margin: 0 auto 0;
+				min-height: 100vh;
+				display: flex;
+				flex-flow: column wrap;
+			}
+
+			.modal-header {
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+				//padding-top: 6.5rem;
+			}
+
+			.modal-closebtn {
+				top: 1.5rem;
+				right: 1.5rem;
+				bottom: auto;
+				color: $color-text;
+			}
+
+			.modal-content {
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+
+				&:last-child {
+					border-bottom-left-radius: 0;
+					border-bottom-right-radius: 0;
+				}
+				flex: 1 0 0;
+
+				&.dark {
+					+ .modal-controls {
+						padding-top: 1.5rem;
+					}
+				}
+			}
+
+			.modal-controls {
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+
+				padding-bottom: 1.5rem;
+			}
+		}
+	}
+
+	&.top-level {
+		z-index: 51;
+	}
+
+	&.modal-from-bottom {
+		@include media {
+			.modal-innerwrap {
+				min-height: 100vh;
+				justify-content: flex-end;
+			}
+
+			.modal-contentwrap {
+				margin-bottom: 0;
+				transform: translate3d(0, 1.5rem, 0);
+				max-width: none;
+				width: 100%;
+			}
+
+			.modal-content {
+				&:last-child {
+					border-bottom-left-radius: 0;
+					border-bottom-right-radius: 0;
+				}
+			}
+		}
+	}
+
+	.modal-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba($color-black,.6);
+		opacity: 0;
+		transition: opacity 300ms ease 200ms;
+		z-index: 1;
+	}
+
+	.modal-outerwrap {
+		position: absolute;
+		z-index: 2;
+		top: 0;
+		left: 0;
+		overflow: auto;
+		overflow-x: hidden;
+		overflow-y: auto;
+		width: 100%;
+		height: 100%;
+		-webkit-backface-visibility: hidden;
+	}
+
+	.modal-innerwrap {
+		display: flex;
+		flex-direction: column;
+		min-height: calc(100vh - 60px);
+		justify-content: center;
+		overflow: auto;
+	}
+
+	.modal-contentwrap {
+		position: relative;
+		width: 70rem;
+		opacity: 0;
+		z-index: 2;
+		transform: translate3d(0, -.5rem, 0);
+		transition: opacity $transition-anim ease, transform $transition-anim-fast ease;
+		-webkit-backface-visibility: hidden;
+		margin: 8vh auto 5rem;
+		max-width: calc(100% - 3rem);
+		box-shadow: $shadow-general;
+		border-radius: $radius-big;
+
+
+		@include media {
+			margin: 4rem auto 5rem;
+
+		}
+	}
+
+	// Sections
+	.modal-header {
+		@include font-medium;
+		position: relative;
+		z-index: 2;
+		background-color: $color-white;
+		padding: 3.5rem 2rem 2rem;
+		border-top-left-radius: $radius-big;
+		border-top-right-radius: $radius-big;
+
+		&.dark {
+			background-color: $color-bg;
+		}
+
+		+ .modal-content {
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+
+		.header-title {
+			@include font-bold;
+			font-size: 1.6rem;
+
+			@include media {
+				font-size: 1.4rem;
+			}
+
+			i {
+				font-size: 1.6em;
+				margin-right: .6em;
+				margin-top: -.2em;
+			}
+		}
+	}
+
+	.modal-content {
+		//box-shadow: $shadow-general;
+		width: 100%;
+		padding: 2.3rem 2rem;
+		background-color: $color-white;
+		border-top-left-radius: $radius-big;
+		border-top-right-radius: $radius-big;
+		position: relative;
+		z-index: 1;
+
+		&.dark {
+			background-color: $color-bg;
+
+			+ .modal-controls {
+				padding-top: 2.3rem;
+			}
+		}
+
+		&:last-child {
+			border-bottom-left-radius: $radius-big;
+			border-bottom-right-radius: $radius-big;
+		}
+	}
+
+	.modal-controls {
+		background-color: $color-white;
+		border-bottom-left-radius: $radius-big;
+		border-bottom-right-radius: $radius-big;
+		padding: 0 2rem 2.3rem;
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: flex-end;
+
+		> * + * {
+			margin-left: 1rem;
+		}
+	}
+	
+	.modal-closebtn {
+		position: absolute;
+		z-index: 50;
+		bottom: calc(100% + 1.4rem);
+		right: 0;
+		color: $color-white;
+		width: 1.5rem;
+		height: 1.5rem;
+		font-size: 1.5rem;
+		border-radius: 50%;
+		transition: color $transition-hover ease, background-color $transition-hover ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		@include media {
+			&:active {
+				color: $color-blue;
+			}
+		}
+
+		@include mediaMin {
+			&:hover, &:active {
+				color: $color-blue;
+			}	
+		}
+	}
+
+	.modal-group {
+		position: relative;
+		z-index: 1;
+
+		$tot: 5;
+		@for $i from 1 through $tot {
+			&:nth-child(#{$i}) {
+				z-index: $tot + 1 - $i;
+			}
+		}
+
+		+ .modal-group {
+			margin-top: 3rem;
+		}
+
+		&.dark {
+			.collapser-content {
+				background-color: $color-bg;
+			}
+		}
+	}
+
+	.modal-filters {
+		margin: 0 -2rem 2rem;
+		width: calc(100% + 4rem);
+
+		&:first-child {
+			margin-top: -2rem;
+		}
+
+		// @include media {
+		// 	width: 100vw;
+		// }
+
+		&.dark {
+			background-color: $color-bg;
+		}
+
+		.filters-innerwrap {
+			padding: 2rem;
+
+			@include media {
+				white-space: nowrap;
+				overflow: hidden;
+				overflow-x: scroll;
+			}
+
+			> * + * {
+				margin-left: 1.5rem;
+			}
+		}
+	}
+
+	.modal-tablewrap {
+		width: calc(100% + 4.0rem);
+		margin-left: -2.0rem;
+		margin-right: -2.0rem;
+	}
+
+	&.show {
+		.modal-overlay {
+			opacity: 1;
+			transition: opacity $transition-anim-fast ease;
+		}
+
+		.modal-contentwrap {
+			opacity: 1;
+			transform: translateY(0);
+			transition: opacity $transition-anim-fast ease $transition-hover, transform $transition-anim-fast ease $transition-hover;
+		}
+	}
+
+	&.narrow {
+		.modal-contentwrap {
+			width: 50rem;
+		}
+	}
+}

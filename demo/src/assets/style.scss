@@ -1,0 +1,61 @@
+$color-black: black;
+$color-white: white;
+
+@mixin font-regular {
+	font-weight: 400;
+}
+@mixin font-bold {
+	font-weight: 600;
+}
+
+html {
+	font-size: 10px;
+}
+
+body, html {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	@include font-regular;
+	font-size: 1.6rem;
+	font-family: 'Mulish', sans-serif;
+	letter-spacing: .02em;
+}
+
+.wrapper {
+	max-width: 120rem;
+	margin: 0 auto;
+}
+
+.app-header {
+	padding: 2rem 0;
+
+	.header-logo {
+		display: block;
+		margin: 0 auto;
+		width: 10rem;
+	}
+}
+
+.app-nav {
+	@include font-bold;
+	background-color: $color-black;
+	color: $color-white;
+	padding: 1rem 0;
+
+	.nav-wrap {
+		display: flex;
+		justify-content: space-between;
+
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+	}
+}
+
+.page {
+	padding: 4rem 0;
+}

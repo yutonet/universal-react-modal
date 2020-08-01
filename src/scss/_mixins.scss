@@ -1,0 +1,130 @@
+@mixin font-face($name, $directory, $weight: 400, $style: normal) {
+	@font-face {
+		font-family: '#{$name}';
+		src: url('#{$directory}.eot');
+		src: url('#{$directory}.eot?#iefix') format('embedded-opentype'),
+		url('#{$directory}.woff2') format('woff2'),
+		url('#{$directory}.woff') format('woff'),
+		url('#{$directory}.ttf') format('truetype'),
+		url('#{$directory}.svg##{$name}') format('svg');
+		font-weight: $weight;
+		font-style: $style;
+		font-stretch: normal;
+		font-display: fallback;
+		unicode-range: U+0020-017E;
+	}
+}
+
+@mixin placeholder(){
+	&::placeholder { opacity: 1; @content; }
+	&:-ms-input-placeholder { @content; }
+	&::-ms-input-placeholder { @content; }
+}
+
+@mixin pseudo($noContent: false){
+	@if $noContent == false {
+		content: ' ';
+	}
+	overflow: hidden;
+	display: block;
+}
+
+@mixin media($width : 960){
+	$wpx: ($width * 1px);
+
+	@media (max-width: $wpx){
+		@content;
+	}
+}
+
+@mixin mediaLandscape($width : 960, $height : 960){
+	$wpx: ($width * 1px);
+	$wpy: ($height * 1px);
+
+	@media screen and (orientation: landscape) and (max-height: $wpy) and (max-width: $wpx){
+		@content;
+	}
+}
+
+@mixin mediaMin($width : 960){
+	$wpx: ($width * 1px);
+
+	@media (min-width: $wpx){
+		@content;
+	}
+}
+
+@mixin calcFontSize($screenWidth, $horizontal: false){
+	$unit: if($horizontal, 1vh, 1vw);
+	$fs: (1000/$screenWidth);
+
+	@if $screenWidth == 1440 {
+		$fs: 0.6946;
+		//$fs: 0.6944444444444
+	}
+	@else if $screenWidth == 375 {
+		$fs: 2.666666666666667;
+	}
+
+	font-size: $fs * $unit;
+}
+
+@mixin linear-gradient($direction, $color-stops...) {
+	@if is-direction($direction) == false {
+		$color-stops: $direction, $color-stops;
+		$direction: 90deg;
+	}
+
+	background: nth(nth($color-stops, 1), 1);
+	background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
+	background: linear-gradient($direction, $color-stops);
+}
+
+@mixin spin($speed: 3s){
+	animation: spin $speed infinite linear;
+}
+
+@mixin clearfix() {
+	&:after {
+		content: '';
+		display: block;
+		clear: both;
+		height: 0;
+		overflow: hidden;
+	}
+}
+
+// Functions
+@function is-direction($value) {
+	$is-keyword: index((to top, to top right, to right top, to right, to bottom right, to right bottom, to bottom, to bottom left, to left bottom, to left, to left top, to top left), $value);
+	$is-angle: type-of($value) == 'number' and index('deg' 'grad' 'turn' 'rad', unit($value));
+
+	@return $is-keyword or $is-angle;
+}
+
+@function legacy-direction($value) {
+	@if is-direction($value) == false {
+		@error "Cannot convert `#{$value}` to legacy syntax because it doesn't seem to be a direction.";
+	}
+
+	$conversion-map: (
+		to top			: bottom,
+		to top right	: bottom left,
+		to right top	: left bottom,
+		to right		: left,
+		to bottom right	: top left,
+		to right bottom	: left top,
+		to bottom		: top,
+		to bottom left	: top right,
+		to left bottom	: right top,
+		to left			: right,
+		to left top		: right bottom,
+		to top left		: bottom right
+	);
+
+	@if map-has-key($conversion-map, $value) {
+		@return map-get($conversion-map, $value);
+	}
+
+	@return 90deg - $value;
+}
