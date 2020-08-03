@@ -2,12 +2,17 @@ import React from 'react'
 
 // Deps
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-// import { TestTwo, ModalController } from 'universal-react-modal'
+import { ModalController } from 'universal-react-modal'
+import { Provider } from 'react-redux'
+import store from './store'
 
 // Pages
 import About from './pages/about'
 import Documentation from './pages/documentation'
 import Demos from './pages/demos'
+
+// Demo Modals
+import TextModal from './demo-modals/text'
 
 // Assets
 import logo from './assets/logo.svg'
@@ -16,39 +21,41 @@ import './assets/styles/app.scss'
 const DemoApp = () => {
 	// console.log(name);
 	return (
-		<Router>
-			{/* <ModalController>
-			</ModalController> */}
-			<div className="app-wrap">
-				<header className="app-header">
-					<div className="wrapper">
-						<img src={logo} className="header-logo" alt="logo" />
-					</div>
-				</header>
+		<Provider store={store}>
+			<Router>
+				<ModalController>
+					<TextModal />
+				</ModalController>
 
-				<nav className="app-nav">
-					<div className="wrapper nav-wrap">
-						<Link to="/">About</Link>
-						<Link to="/documentation">Documentation</Link>
-						<Link to="/demos">Demos</Link>
-					</div>
-				</nav>
+				<div className="app-wrap">
+					<header className="app-header">
+						<div className="wrapper">
+							<img src={logo} className="header-logo" alt="logo" />
+						</div>
+					</header>
 
-				{/* <TestTwo /> */}
+					<nav className="app-nav">
+						<div className="wrapper nav-wrap">
+							<Link to="/">About</Link>
+							<Link to="/documentation">Documentation</Link>
+							<Link to="/demos">Demos</Link>
+						</div>
+					</nav>
 
-				<Switch>
-					<Route path="/" exact>
-						<About />
-					</Route>
-					<Route path="/documentation" exact>
-						<Documentation />
-					</Route>
-					<Route path="/demos" exact>
-						<Demos />
-					</Route>
-				</Switch>
-			</div>
-		</Router>
+					<Switch>
+						<Route path="/" exact>
+							<About />
+						</Route>
+						<Route path="/documentation" exact>
+							<Documentation />
+						</Route>
+						<Route path="/demos" exact>
+							<Demos />
+						</Route>
+					</Switch>
+				</div>
+			</Router>
+		</Provider>
 	);
 }
 

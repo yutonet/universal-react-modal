@@ -12,8 +12,8 @@ import blockOverflow from './functions/block-overflow'
 
 const mapStateToProps = (state, props) => {
 	return {
-		modalData: state.modals.modalData,
-		topModalData: state.modals.topModalData,
+		modalData: state.modalReducer.modalData,
+		topModalData: state.modalReducer.topModalData,
 	};
 };
 
@@ -29,7 +29,11 @@ const ModalController = (props) => {
     }
     
     useEffect(() => {
-        console.log('hello world');
+		console.log('include styles: ', props.includeStyles);
+		
+		window.addEventListener('openUniversalModal', function (e) {
+			console.log('açınız', e.detail);
+		}, false);
     }, [])
 
 	return (
