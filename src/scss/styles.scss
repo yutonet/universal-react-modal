@@ -1,5 +1,11 @@
 @import 'mixins';
 
+body {
+	&.urm-block-overflow {
+		overflow: hidden;
+	}
+}
+
 .modal-container {
 	position: fixed;
 	top: 0;

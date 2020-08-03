@@ -2,7 +2,7 @@ import React from 'react'
 
 // Deps
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import { TestComponent, TestTwo } from 'universal-react-modal'
+// import { TestTwo, ModalController } from 'universal-react-modal'
 
 // Pages
 import About from './pages/about'
@@ -11,12 +11,14 @@ import Demos from './pages/demos'
 
 // Assets
 import logo from './assets/logo.svg'
-import './assets/style.scss'
+import './assets/styles/app.scss'
 
 const DemoApp = () => {
 	// console.log(name);
 	return (
 		<Router>
+			{/* <ModalController>
+			</ModalController> */}
 			<div className="app-wrap">
 				<header className="app-header">
 					<div className="wrapper">
@@ -32,7 +34,7 @@ const DemoApp = () => {
 					</div>
 				</nav>
 
-				<TestTwo />
+				{/* <TestTwo /> */}
 
 				<Switch>
 					<Route path="/" exact>

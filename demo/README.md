@@ -1,1 +1,0 @@
-## This is the demo and documentation application for the universal-react-modal package
