@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React from 'react';
 
 // Deps
 import { closeModal } from './utils';
@@ -14,12 +14,12 @@ class ModalController extends React.Component {
 	constructor(props){
 		super(props);
 
-		this.calculateEmptyModalData = this.calculateEmptyModalData.bind(this);
+		this.emptyModalData = this.calculateEmptyModalData(props.layers);
 		this.modalClosed = this.modalClosed.bind(this);
 		this.modalOpened = this.modalOpened.bind(this);
 
 		this.state = {
-			modalData: this.calculateEmptyModalData(props.layers),
+			modalData: this.emptyModalData,
 		}
 	}
 
@@ -34,7 +34,9 @@ class ModalController extends React.Component {
 	}
 
 	modalClosed () {
-		blockOverflow(false);
+		if(isEqual(this.state.modalData, this.emptyModalData)){
+			blockOverflow(false);
+		}
 	}
 	
 	modalOpened () {
@@ -44,7 +46,6 @@ class ModalController extends React.Component {
 	componentDidMount() {
 		let vm = this;
 		window.addEventListener('openUniversalModal', (e) => {
-			console.log('aç', vm.state.modalData);
 			if(!isEqual(vm.state.modalData[e.detail.layer -1], e.detail)){
 				let newData = [...vm.state.modalData];
 				newData[e.detail.layer -1] = e.detail;
@@ -53,7 +54,7 @@ class ModalController extends React.Component {
 		}, false);
 
 		window.addEventListener('closeUniversalModal', (e) => {
-			vm.setState({modalData: this.calculateEmptyModalData(vm.props.layers)})
+			vm.setState({modalData: this.emptyModalData})
 		}, false);
 	}
 
@@ -86,106 +87,6 @@ class ModalController extends React.Component {
 		)
 	}
 }
-
-// const ModalController = (props) => {
-// 	const calculateHollowLayers = (layerCount) => {
-// 		let retObj = [];
-// 		for(let k = 0; k < layerCount; k++) {
-// 			retObj.push(k+1);
-// 		}
-// 		return retObj;
-// 	}
-
-// 	const calculateModalData = (layerCount) => {
-// 		let newData = [];
-
-// 		for(let k = 0; k < layerCount; k++) {
-// 			newData.push(false);
-// 		}
-
-// 		return newData;
-// 	}
-
-// 	const modalClosed = () => {
-// 		// if(!props.modalData && !props.topModalData){
-// 		// 	blockOverflow(false);
-// 		// }
-// 		blockOverflow(false);
-// 		// Check if all elems are false.
-// 	}
-
-// 	const modalOpened = () => {
-// 		blockOverflow();
-// 	}
-	
-// 	const hollowLayers = useRef(calculateHollowLayers(props.layers));
-// 	const [modalData, setModalData] = useState(calculateModalData(props.layers));
-// 	const [loop, setLoop] = useState(1);
-
-// 	const openModal = (data) => {
-// 		console.log('open', modalData);
-// 		setLoop(loop + 1);
-// 		if(!isEqual(modalData[data.layer -1], data)){
-// 			let newData = [...modalData];
-// 			newData[data.layer -1] = data;
-// 			setModalData(newData);
-// 		}
-// 	}
-
-// 	const closeModal = useCallback((layer) => {
-// 		console.log('close', layer);
-// 		setLoop(loop + 1);
-
-// 		console.log('kap', loop, modalData);
-// 		// if(modalData[layer -1]){
-// 		// 	let newData = [...modalData];
-// 		// 	newData[layer -1] = false;
-// 		// 	console.log('kapa', newData);
-// 		// 	setModalData(newData);
-// 		// }
-// 	}, [modalData, loop]);
-    
-//     useEffect(() => {
-// 		window.addEventListener('openUniversalModal', (e) => {
-// 			openModal(e.detail);
-// 		}, false);
-
-// 		window.addEventListener('closeUniversalModal', (e) => {
-// 			closeModal(e.detail.layer);
-// 		}, false);
-
-// 		return (() => {
-// 			window.removeEventListener('openUniversalModal');
-// 			window.removeEventListener('closeUniversalModal');
-// 		})
-// 	}, [])
-
-// 	useEffect(() => {
-// 		console.log('modal data change', modalData);
-// 	}, [modalData])
-	
-// 	useEffect(() => {
-// 		if(props.layers !== hollowLayers.current.length) {
-// 			console.warn('Dynamic change of the amount of layers on the modals controller is not allowed.');
-// 		}
-// 	}, [props.layers])
-
-// 	return (
-// 		<React.Fragment>
-// 			{hollowLayers.current.map((key, nth) => (
-// 				<ModalLayer
-// 					key={nth}
-// 					layer={key}
-// 					data={modalData[nth]}
-// 					closeBtn={props.defaultCloseBtn}
-// 					onClose={modalClosed}
-// 					onOpen={modalOpened}>
-// 					{props.children}
-// 				</ModalLayer>
-// 			))}
-// 		</React.Fragment>
-// 	)
-// }
 
 ModalController.defaultProps = {
 	defaultCloseBtn: <button className="modal-defaultclosebtn" type="button"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path d="M512 439.603l-362.035-362.035-72.397 72.397 362.035 362.035-362.035 362.035 72.397 72.397 362.035-362.035 362.035 362.035 72.397-72.397-362.035-362.035 362.035-362.035-72.397-72.397-362.035 362.035z"></path></svg></button>,	
@@ -340,7 +241,7 @@ class ModalLayer extends React.Component {
 		if(Component){
 			let props = (Component.type.props ? Component.type.props : Component.props);
 			return (
-				<div className={"modal-container " + (this.props.top ? 'top-level ' : '') + props.containerClass + (this.state.show ? ' show' : '')}>
+				<div className={"modal-container layer-" + this.props.layer + ' ' + props.containerClass + (this.state.show ? ' show' : '')}>
 					<div className="modal-outerwrap">
 						<div className="modal-innerwrap">
 							{Component}

@@ -1,7 +1,6 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var React = require('react');
-var React__default = _interopDefault(React);
+var React = _interopDefault(require('react'));
 
 function _extends() {
   _extends = Object.assign || function (target) {
@@ -3988,11 +3987,11 @@ var ModalController = /*#__PURE__*/function (_React$Component) {
     var _this;
 
     _this = _React$Component.call(this, props) || this;
-    _this.calculateEmptyModalData = _this.calculateEmptyModalData.bind(_assertThisInitialized(_this));
+    _this.emptyModalData = _this.calculateEmptyModalData(props.layers);
     _this.modalClosed = _this.modalClosed.bind(_assertThisInitialized(_this));
     _this.modalOpened = _this.modalOpened.bind(_assertThisInitialized(_this));
     _this.state = {
-      modalData: _this.calculateEmptyModalData(props.layers)
+      modalData: _this.emptyModalData
     };
     return _this;
   }
@@ -4010,7 +4009,9 @@ var ModalController = /*#__PURE__*/function (_React$Component) {
   };
 
   _proto.modalClosed = function modalClosed() {
-    blockOverflow(false);
+    if (isEqual_1(this.state.modalData, this.emptyModalData)) {
+      blockOverflow(false);
+    }
   };
 
   _proto.modalOpened = function modalOpened() {
@@ -4022,8 +4023,6 @@ var ModalController = /*#__PURE__*/function (_React$Component) {
 
     var vm = this;
     window.addEventListener('openUniversalModal', function (e) {
-      console.log('aç', vm.state.modalData);
-
       if (!isEqual_1(vm.state.modalData[e.detail.layer - 1], e.detail)) {
         var newData = [].concat(vm.state.modalData);
         newData[e.detail.layer - 1] = e.detail;
@@ -4034,7 +4033,7 @@ var ModalController = /*#__PURE__*/function (_React$Component) {
     }, false);
     window.addEventListener('closeUniversalModal', function (e) {
       vm.setState({
-        modalData: _this2.calculateEmptyModalData(vm.props.layers)
+        modalData: _this2.emptyModalData
       });
     }, false);
   };
@@ -4053,8 +4052,8 @@ var ModalController = /*#__PURE__*/function (_React$Component) {
   _proto.render = function render() {
     var _this3 = this;
 
-    return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, this.state.modalData.map(function (data, nth) {
-      return /*#__PURE__*/React__default.createElement(ModalLayer, {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, this.state.modalData.map(function (data, nth) {
+      return /*#__PURE__*/React.createElement(ModalLayer, {
         key: nth,
         layer: nth + 1,
         data: data,
@@ -4066,17 +4065,17 @@ var ModalController = /*#__PURE__*/function (_React$Component) {
   };
 
   return ModalController;
-}(React__default.Component);
+}(React.Component);
 
 ModalController.defaultProps = {
-  defaultCloseBtn: /*#__PURE__*/React__default.createElement("button", {
+  defaultCloseBtn: /*#__PURE__*/React.createElement("button", {
     className: "modal-defaultclosebtn",
     type: "button"
-  }, /*#__PURE__*/React__default.createElement("svg", {
+  }, /*#__PURE__*/React.createElement("svg", {
     version: "1.1",
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 1024 1024"
-  }, /*#__PURE__*/React__default.createElement("path", {
+  }, /*#__PURE__*/React.createElement("path", {
     d: "M512 439.603l-362.035-362.035-72.397 72.397 362.035 362.035-362.035 362.035 72.397 72.397 362.035-362.035 362.035 362.035 72.397-72.397-362.035-362.035 362.035-362.035-72.397-72.397-362.035 362.035z"
   }))),
   layers: 2
@@ -4099,7 +4098,7 @@ var ModalLayer = /*#__PURE__*/function (_React$Component2) {
     _this4.closeModal = _this4.closeModal.bind(_assertThisInitialized(_this4));
     _this4.getModalComponent = _this4.getModalComponent.bind(_assertThisInitialized(_this4));
     _this4.clearActions = _this4.clearActions.bind(_assertThisInitialized(_this4));
-    _this4.closeBtn = React__default.cloneElement(props.closeBtn, {
+    _this4.closeBtn = React.cloneElement(props.closeBtn, {
       onClick: _this4.closeModal
     });
     _this4.defaultOpts = {
@@ -4191,7 +4190,7 @@ var ModalLayer = /*#__PURE__*/function (_React$Component2) {
 
     if (this.state.data) {
       var props = omit_1(this.state.data, ['modal']);
-      var children = React__default.Children.toArray(this.props.children);
+      var children = React.Children.toArray(this.props.children);
       props.className = 'modal-contentwrap ' + props.className;
 
       if (props.wide) {
@@ -4208,7 +4207,7 @@ var ModalLayer = /*#__PURE__*/function (_React$Component2) {
         var item = children[k];
 
         if (item.props.name === this.state.data.modal || item.type.props && item.type.props.name === this.state.data.modal) {
-          Component = React__default.cloneElement(item, _extends({}, props));
+          Component = React.cloneElement(item, _extends({}, props));
         }
       }
 
@@ -4252,15 +4251,15 @@ var ModalLayer = /*#__PURE__*/function (_React$Component2) {
 
     if (Component) {
       var props = Component.type.props ? Component.type.props : Component.props;
-      return /*#__PURE__*/React__default.createElement("div", {
-        className: "modal-container " + (this.props.top ? 'top-level ' : '') + props.containerClass + (this.state.show ? ' show' : '')
-      }, /*#__PURE__*/React__default.createElement("div", {
+      return /*#__PURE__*/React.createElement("div", {
+        className: "modal-container layer-" + this.props.layer + ' ' + props.containerClass + (this.state.show ? ' show' : '')
+      }, /*#__PURE__*/React.createElement("div", {
         className: "modal-outerwrap"
-      }, /*#__PURE__*/React__default.createElement("div", {
+      }, /*#__PURE__*/React.createElement("div", {
         className: "modal-innerwrap"
-      }, Component), props.preventClose ? /*#__PURE__*/React__default.createElement("div", {
+      }, Component), props.preventClose ? /*#__PURE__*/React.createElement("div", {
         className: "modal-overlay"
-      }) : /*#__PURE__*/React__default.createElement("button", {
+      }) : /*#__PURE__*/React.createElement("button", {
         className: "modal-overlay",
         onClick: function onClick(e) {
           if (!props.preventClose) {
@@ -4274,7 +4273,7 @@ var ModalLayer = /*#__PURE__*/function (_React$Component2) {
   };
 
   return ModalLayer;
-}(React__default.Component);
+}(React.Component);
 
 ModalLayer.defaultProps = {
   top: false

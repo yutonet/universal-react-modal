@@ -3938,11 +3938,11 @@ const blockOverflow = (block = true) => {
 class ModalController extends React.Component {
   constructor(props) {
     super(props);
-    this.calculateEmptyModalData = this.calculateEmptyModalData.bind(this);
+    this.emptyModalData = this.calculateEmptyModalData(props.layers);
     this.modalClosed = this.modalClosed.bind(this);
     this.modalOpened = this.modalOpened.bind(this);
     this.state = {
-      modalData: this.calculateEmptyModalData(props.layers)
+      modalData: this.emptyModalData
     };
   }
 
@@ -3957,7 +3957,9 @@ class ModalController extends React.Component {
   }
 
   modalClosed() {
-    blockOverflow(false);
+    if (isEqual_1(this.state.modalData, this.emptyModalData)) {
+      blockOverflow(false);
+    }
   }
 
   modalOpened() {
@@ -3967,8 +3969,6 @@ class ModalController extends React.Component {
   componentDidMount() {
     let vm = this;
     window.addEventListener('openUniversalModal', e => {
-      console.log('aç', vm.state.modalData);
-
       if (!isEqual_1(vm.state.modalData[e.detail.layer - 1], e.detail)) {
         let newData = [...vm.state.modalData];
         newData[e.detail.layer - 1] = e.detail;
@@ -3979,7 +3979,7 @@ class ModalController extends React.Component {
     }, false);
     window.addEventListener('closeUniversalModal', e => {
       vm.setState({
-        modalData: this.calculateEmptyModalData(vm.props.layers)
+        modalData: this.emptyModalData
       });
     }, false);
   }
@@ -4183,7 +4183,7 @@ class ModalLayer extends React.Component {
     if (Component) {
       let props = Component.type.props ? Component.type.props : Component.props;
       return /*#__PURE__*/React.createElement("div", {
-        className: "modal-container " + (this.props.top ? 'top-level ' : '') + props.containerClass + (this.state.show ? ' show' : '')
+        className: "modal-container layer-" + this.props.layer + ' ' + props.containerClass + (this.state.show ? ' show' : '')
       }, /*#__PURE__*/React.createElement("div", {
         className: "modal-outerwrap"
       }, /*#__PURE__*/React.createElement("div", {

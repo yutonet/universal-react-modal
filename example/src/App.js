@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Deps
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, NavLink } from 'react-router-dom'
 import { ModalController } from 'universal-react-modal'
 
 // Pages
@@ -15,7 +15,12 @@ import TextModal from './demo-modals/text'
 // Assets
 import logo from './assets/logo.svg'
 import './assets/styles/app.scss'
-import 'universal-react-modal/src/scss/urm-styles.scss'
+
+// To Import SCSS Module
+import 'universal-react-modal/scss/styles.scss'
+
+// To Import CSS Module
+// import 'universal-react-modal/dist/index.css'
 
 const DemoApp = () => {
 	// console.log(name);
@@ -28,15 +33,17 @@ const DemoApp = () => {
 				<div className="app-wrap">
 					<header className="app-header">
 						<div className="wrapper">
-							<img src={logo} className="header-logo" alt="logo" />
+							<Link to="/">
+								<img src={logo} className="header-logo" alt="logo" />
+							</Link>
 						</div>
 					</header>
 
 					<nav className="app-nav">
 						<div className="wrapper nav-wrap">
-							<Link to="/">About</Link>
-							<Link to="/documentation">Documentation</Link>
-							<Link to="/demos">Demos</Link>
+							<NavLink to="/" exact>About</NavLink>
+							<NavLink to="/documentation">Documentation</NavLink>
+							<NavLink to="/demos">Demos</NavLink>
 						</div>
 					</nav>
 

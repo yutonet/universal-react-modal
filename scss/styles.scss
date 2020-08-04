@@ -14,21 +14,25 @@ body {
 	}
 }
 
+$baseZ: 100;
+
 .modal-container {
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
-	z-index: 50;
+	z-index: $baseZ;
 	box-sizing: border-box;
 	
 	* {
 		box-sizing: border-box;
 	}
 
-	&.top-level {
-		z-index: 51;
+	@for $i from 2 through 10 {
+		&.layer-#{$i} {
+			z-index: $baseZ + $i -1;
+		}
 	}
 
 	&.modal-from-bottom {

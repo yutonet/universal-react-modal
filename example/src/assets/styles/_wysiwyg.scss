@@ -1,0 +1,91 @@
+.wysiwyg {
+	@include font-regular;
+
+	> * {
+		margin: .5em 0 .2em;
+
+		&:first-child {
+			margin-top: 0;
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		@include font-black;
+		margin-top: 1.5em;
+		margin-bottom: .8em;
+		font-size: 1.1em;
+
+		+ * {
+			margin-top: 0em;
+		}
+    }
+    
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.8em; }
+    h3 { font-size: 1.5em; }
+
+	strong, b {
+		color: $color-text;
+	}
+
+	ul:not(.no-list) {
+		list-style: disc inside;
+
+		li {
+			+ li {
+				margin-top: .5em;
+			}
+		}
+	}
+
+	blockquote {
+		font-family: inherit;
+		color: $color-text;
+		font-size: 1.45em;
+		line-height: 1.44em;
+		position: relative;
+
+		@include media {
+			padding-left: 3.9rem;
+			padding-right: 3.9rem;
+		}
+
+		&:before, &:after {
+			position: absolute;
+			color: $color-black;
+			font-size: 6em;
+			opacity: .05;
+
+			@include media {
+				font-size: 9rem;
+			}
+		}
+
+		&:before {
+			content: '“';
+			top: .25em;
+			right: calc(100% + .1em);
+
+			@include media {
+				left: 0;
+				right: auto;
+			}
+		}
+
+		&:after {
+			content: '“';
+			bottom: .25em;
+			left: calc(100% + 0em);
+			transform: rotate(180deg);
+
+			@include media {
+				right: 0;
+				left: auto;
+			}
+		}
+	}
+}
