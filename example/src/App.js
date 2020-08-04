@@ -3,8 +3,6 @@ import React from 'react'
 // Deps
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { ModalController } from 'universal-react-modal'
-import { Provider } from 'react-redux'
-import store from './store'
 
 // Pages
 import About from './pages/about'
@@ -17,12 +15,12 @@ import TextModal from './demo-modals/text'
 // Assets
 import logo from './assets/logo.svg'
 import './assets/styles/app.scss'
+import 'universal-react-modal/src/scss/urm-styles.scss'
 
 const DemoApp = () => {
 	// console.log(name);
 	return (
-		<Provider store={store}>
-			<Router>
+		<Router>
 				<ModalController>
 					<TextModal />
 				</ModalController>
@@ -55,7 +53,6 @@ const DemoApp = () => {
 					</Switch>
 				</div>
 			</Router>
-		</Provider>
 	);
 }
 

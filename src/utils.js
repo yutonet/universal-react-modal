@@ -7,15 +7,14 @@ const openModal = (key, opts = {}) => {
 	// else {
 	// 	store.dispatch(modalOpener(payload));
 	// }
-	console.log('aç');
 
-	const openEvent = new CustomEvent('openUniversalModal', { detail: { modal: key, ...opts }});
+	const openEvent = new CustomEvent('openUniversalModal', { detail: { modal: key, layer: 1, ...opts }});
 	// openEvent.initEvent('openUniversalModal', true, 'test');
 	
 	window.dispatchEvent(openEvent);
 }
 
-const closeModal = (topModal = null) => {
+const closeModal = (layer = false) => {
 	// if(topModal === true) {
 	// 	store.dispatch(topModalCloser());
 	// }
@@ -26,7 +25,7 @@ const closeModal = (topModal = null) => {
 	// 	store.dispatch(topModalCloser());
 	// 	store.dispatch(modalCloser());
 	// }
-	const closeEvent = new CustomEvent('closeUniversalModal', { detail: { top: topModal }});
+	const closeEvent = new CustomEvent('closeUniversalModal', { detail: { layer: layer }});
 	
 	window.dispatchEvent(closeEvent);
 }

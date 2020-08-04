@@ -2,7 +2,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var React = require('react');
 var React__default = _interopDefault(React);
-var reactRedux = require('react-redux');
 
 function _extends() {
   _extends = Object.assign || function (target) {
@@ -41,23 +40,23 @@ var openModal = function openModal(key, opts) {
     opts = {};
   }
 
-  console.log('aç');
   var openEvent = new CustomEvent('openUniversalModal', {
     detail: _extends({
-      modal: key
+      modal: key,
+      layer: 1
     }, opts)
   });
   window.dispatchEvent(openEvent);
 };
 
-var closeModal = function closeModal(topModal) {
-  if (topModal === void 0) {
-    topModal = null;
+var closeModal = function closeModal(layer) {
+  if (layer === void 0) {
+    layer = false;
   }
 
   var closeEvent = new CustomEvent('closeUniversalModal', {
     detail: {
-      top: topModal
+      layer: layer
     }
   });
   window.dispatchEvent(closeEvent);
@@ -3982,92 +3981,149 @@ var blockOverflow = function blockOverflow(block) {
   }
 };
 
-var mapStateToProps = function mapStateToProps(state, props) {
-  return {
-    modalData: state.modalReducer.modalData,
-    topModalData: state.modalReducer.topModalData
-  };
-};
+var ModalController = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(ModalController, _React$Component);
 
-var ModalController = function ModalController(props) {
-  var modalClosed = function modalClosed() {
-    if (!props.modalData && !props.topModalData) {
-      blockOverflow(false);
-    }
-  };
-
-  var modalOpened = function modalOpened() {
-    blockOverflow();
-  };
-
-  React.useEffect(function () {
-    console.log('include styles: ', props.includeStyles);
-    window.addEventListener('openUniversalModal', function (e) {
-      console.log('açınız', e.detail);
-    }, false);
-  }, []);
-  return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(ModalLayer, {
-    top: true,
-    modalData: props.topModalData,
-    onClose: modalClosed,
-    onOpen: modalOpened
-  }, props.children), /*#__PURE__*/React__default.createElement(ModalLayer, {
-    modalData: props.modalData,
-    onClose: modalClosed,
-    onOpen: modalOpened
-  }, props.children));
-};
-
-ModalController.defaultProps = {
-  includeStyles: true
-};
-
-var ModalLayer = /*#__PURE__*/function (_React$Component) {
-  _inheritsLoose(ModalLayer, _React$Component);
-
-  function ModalLayer(props) {
+  function ModalController(props) {
     var _this;
 
     _this = _React$Component.call(this, props) || this;
+    _this.calculateEmptyModalData = _this.calculateEmptyModalData.bind(_assertThisInitialized(_this));
+    _this.modalClosed = _this.modalClosed.bind(_assertThisInitialized(_this));
+    _this.modalOpened = _this.modalOpened.bind(_assertThisInitialized(_this));
     _this.state = {
-      data: false,
-      show: false,
-      component: false
-    };
-    _this._mounted = false;
-    _this.actionTimer = false;
-    _this.closeModal = _this.closeModal.bind(_assertThisInitialized(_this));
-    _this.getModalComponent = _this.getModalComponent.bind(_assertThisInitialized(_this));
-    _this.clearActions = _this.clearActions.bind(_assertThisInitialized(_this));
-    _this.closeBtn = /*#__PURE__*/React__default.createElement("button", {
-      className: "modal-closebtn",
-      type: "button",
-      onClick: _this.closeModal
-    }, /*#__PURE__*/React__default.createElement("i", {
-      className: "icon-close"
-    }));
-    _this.defaultOpts = {
-      modal: "",
-      url: false,
-      urlTitle: false,
-      closeBtn: _this.closeBtn,
-      onClose: _this.onClose,
-      className: ""
+      modalData: _this.calculateEmptyModalData(props.layers)
     };
     return _this;
   }
 
-  var _proto = ModalLayer.prototype;
+  var _proto = ModalController.prototype;
+
+  _proto.calculateEmptyModalData = function calculateEmptyModalData(layerCount) {
+    var newData = [];
+
+    for (var k = 0; k < layerCount; k++) {
+      newData.push(false);
+    }
+
+    return newData;
+  };
+
+  _proto.modalClosed = function modalClosed() {
+    blockOverflow(false);
+  };
+
+  _proto.modalOpened = function modalOpened() {
+    blockOverflow(true);
+  };
 
   _proto.componentDidMount = function componentDidMount() {
-    this._mounted = true;
+    var _this2 = this;
+
+    var vm = this;
+    window.addEventListener('openUniversalModal', function (e) {
+      console.log('aç', vm.state.modalData);
+
+      if (!isEqual_1(vm.state.modalData[e.detail.layer - 1], e.detail)) {
+        var newData = [].concat(vm.state.modalData);
+        newData[e.detail.layer - 1] = e.detail;
+        vm.setState({
+          modalData: newData
+        });
+      }
+    }, false);
+    window.addEventListener('closeUniversalModal', function (e) {
+      vm.setState({
+        modalData: _this2.calculateEmptyModalData(vm.props.layers)
+      });
+    }, false);
   };
 
   _proto.componentWillUnmount = function componentWillUnmount() {
-    this._mounted = false;
+    window.removeEventListener('openUniversalModal');
+    window.removeEventListener('closeUniversalModal');
   };
 
   _proto.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
+    if (prevProps.layers !== this.props.layers) {
+      console.warn('Dynamic change of the amount of layers on the modals controller is not allowed.');
+    }
+  };
+
+  _proto.render = function render() {
+    var _this3 = this;
+
+    return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, this.state.modalData.map(function (data, nth) {
+      return /*#__PURE__*/React__default.createElement(ModalLayer, {
+        key: nth,
+        layer: nth + 1,
+        data: data,
+        closeBtn: _this3.props.defaultCloseBtn,
+        onClose: _this3.modalClosed,
+        onOpen: _this3.modalOpened
+      }, _this3.props.children);
+    }));
+  };
+
+  return ModalController;
+}(React__default.Component);
+
+ModalController.defaultProps = {
+  defaultCloseBtn: /*#__PURE__*/React__default.createElement("button", {
+    className: "modal-defaultclosebtn",
+    type: "button"
+  }, /*#__PURE__*/React__default.createElement("svg", {
+    version: "1.1",
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 1024 1024"
+  }, /*#__PURE__*/React__default.createElement("path", {
+    d: "M512 439.603l-362.035-362.035-72.397 72.397 362.035 362.035-362.035 362.035 72.397 72.397 362.035-362.035 362.035 362.035 72.397-72.397-362.035-362.035 362.035-362.035-72.397-72.397-362.035 362.035z"
+  }))),
+  layers: 2
+};
+
+var ModalLayer = /*#__PURE__*/function (_React$Component2) {
+  _inheritsLoose(ModalLayer, _React$Component2);
+
+  function ModalLayer(props) {
+    var _this4;
+
+    _this4 = _React$Component2.call(this, props) || this;
+    _this4.state = {
+      data: false,
+      show: false,
+      component: false
+    };
+    _this4._mounted = false;
+    _this4.actionTimer = false;
+    _this4.closeModal = _this4.closeModal.bind(_assertThisInitialized(_this4));
+    _this4.getModalComponent = _this4.getModalComponent.bind(_assertThisInitialized(_this4));
+    _this4.clearActions = _this4.clearActions.bind(_assertThisInitialized(_this4));
+    _this4.closeBtn = React__default.cloneElement(props.closeBtn, {
+      onClick: _this4.closeModal
+    });
+    _this4.defaultOpts = {
+      modal: "",
+      url: false,
+      urlTitle: false,
+      closeBtn: _this4.closeBtn,
+      onClose: _this4.onClose,
+      className: ""
+    };
+    return _this4;
+  }
+
+  var _proto2 = ModalLayer.prototype;
+
+  _proto2.componentDidMount = function componentDidMount() {
+    this._mounted = true;
+  };
+
+  _proto2.componentWillUnmount = function componentWillUnmount() {
+    this._mounted = false;
+  };
+
+  _proto2.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
     var vm = this;
 
     var updateData = function updateData() {
@@ -4088,8 +4144,8 @@ var ModalLayer = /*#__PURE__*/function (_React$Component) {
       }
     };
 
-    if (!isEqual_1(prevProps.modalData, vm.props.modalData)) {
-      var opts = vm.props.modalData === false ? false : extend({}, vm.defaultOpts, vm.props.modalData);
+    if (!isEqual_1(prevProps.data, vm.props.data)) {
+      var opts = vm.props.data === false ? false : extend({}, vm.defaultOpts, vm.props.data);
 
       if (vm.state.show) {
         vm.clearActions();
@@ -4107,7 +4163,7 @@ var ModalLayer = /*#__PURE__*/function (_React$Component) {
             vm.props.onClose();
             vm.actionTimer = false;
           }
-        }, 600);
+        }, 400);
       } else {
         vm.setState({
           data: opts
@@ -4129,7 +4185,7 @@ var ModalLayer = /*#__PURE__*/function (_React$Component) {
     }
   };
 
-  _proto.getModalComponent = function getModalComponent() {
+  _proto2.getModalComponent = function getModalComponent() {
     var Component = false;
     var vm = this;
 
@@ -4164,22 +4220,22 @@ var ModalLayer = /*#__PURE__*/function (_React$Component) {
     return Component;
   };
 
-  _proto.clearActions = function clearActions() {
+  _proto2.clearActions = function clearActions() {
     if (this.actionTimer !== false) {
       clearTimeout(this.actionTimer);
       this.actionTimer = false;
     }
   };
 
-  _proto.closeModal = function closeModal$1(closeData, modalKey) {
+  _proto2.closeModal = function closeModal$1(closeData, modalKey) {
     if (modalKey === void 0) {
       modalKey = false;
     }
 
-    if (modalKey === false || modalKey === this.props.modalData.modal) {
+    if (modalKey === false || modalKey === this.props.data.modal) {
       var componentProps = this.state.component.type.props ? this.state.component.type.props : this.state.component.props;
 
-      closeModal(this.props.top);
+      closeModal(this.props.layer);
 
       if (this.state.data.onClose) {
         this.state.data.onClose(closeData, this.state.data);
@@ -4191,7 +4247,7 @@ var ModalLayer = /*#__PURE__*/function (_React$Component) {
     }
   };
 
-  _proto.render = function render() {
+  _proto2.render = function render() {
     var Component = this.state.component;
 
     if (Component) {
@@ -4223,41 +4279,8 @@ var ModalLayer = /*#__PURE__*/function (_React$Component) {
 ModalLayer.defaultProps = {
   top: false
 };
-var modalController = reactRedux.connect(mapStateToProps)(ModalController);
 
-var initialState = {
-  modalData: false,
-  topModalData: false
-};
-
-var modalReducer = function modalReducer(state, action) {
-  if (state === void 0) {
-    state = initialState;
-  }
-
-  if (action.type === "OPEN_MODAL") {
-    return Object.assign({}, state, {
-      modalData: action.payload
-    });
-  } else if (action.type === "CLOSE_MODAL") {
-    return Object.assign({}, state, {
-      modalData: false
-    });
-  } else if (action.type === "OPEN_TOP_MODAL") {
-    return Object.assign({}, state, {
-      topModalData: action.payload
-    });
-  } else if (action.type === "CLOSE_TOP_MODAL") {
-    return Object.assign({}, state, {
-      topModalData: false
-    });
-  }
-
-  return state;
-};
-
-exports.ModalController = modalController;
+exports.ModalController = ModalController;
 exports.closeModal = closeModal;
-exports.modalReducer = modalReducer;
 exports.openModal = openModal;
 //# sourceMappingURL=index.js.map

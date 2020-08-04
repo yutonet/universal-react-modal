@@ -1,0 +1,106 @@
+//colors
+$color-black: #000 !default;
+$color-white: #fff !default;
+
+$color-text: #3e475f !default;
+$color-text-light: #9ea3af !default;
+//$color-text-lighter: #a2a7a5 !default;
+
+$color-gray-dark: #d9d9d9 !default;
+$color-gray: #eaecee !default;
+$color-gray-light: #f7f7f7 !default;
+
+$color-red: #ff3824 !default;
+$color-red-dark: #9e1b4a  !default;
+
+$color-green: #3db662 !default;
+
+$color-yellow: #ffbd2f !default;
+$color-yellow-dark: #d2a507 !default;
+
+$color-orange: #eb7419 !default;
+$color-orange-dark: #fe7854 !default;
+
+$color-tan: #c3aeaa !default;
+$color-tan-bg: #f3f2eb !default;
+
+$color-blue: #0035ae !default;
+$color-blue-dark: #032d8d !default;
+$color-blue-light: #009fe3 !default;
+
+$color-purple: #6847a0 !default;
+
+
+
+// Status Colors
+
+$color-success: $color-green !default;
+$color-warning: $color-orange !default;
+$color-error: $color-red !default;
+$color-error-bg: lighten($color-red, 39%) !default;
+$color-error-text: $color-red-dark !default;
+
+//radiusses
+$radius-general: .4rem !default;
+$radius-big: .8rem !default;
+$radius-bigger: 1.3rem !default;
+
+
+$color-yellow-text: #e7cd76 !default;
+$color-yellow-bg: #fcf6e5 !default;
+
+$color-info: #9ea2af !default;
+
+
+
+
+
+
+
+$color-warning-bg: #f7dbd8 !default;
+$color-warning-text: #87605c !default;
+$color-warning-border: #e2c8c5 !default;
+
+$color-purple-light: #600095 !default;
+$color-purple-2: #4d00eb !default;
+$color-purple-2-light: #9400e1 !default;
+
+$color-green-dark: #478371 !default;
+$color-green-light: #50dfbc !default;
+$color-green-bg: #e2f0ec !default;
+$color-orange: #ff5900 !default;
+$color-red: #fe3434 !default;
+$color-crimson: #d74742 !default;
+$color-yellow-bg-light: #fff8d6 !default;
+$color-yellow-border: #e9db94 !default;
+$color-yellow-border-light: #ebe5c5 !default;
+
+$color-bg: #f6f8f9 !default;
+$color-bg-light: $color-gray-light !default;
+
+// effect colors
+$color-autofill: rgb(232, 240, 254) !default;
+$color-error: $color-crimson !default;
+$color-success: $color-green-light !default;
+$color-bg-error: lighten($color-crimson, 20%) !default;
+
+//transition
+$transition-superfast: 50ms !default;
+$transition-fast: 100ms !default;
+$transition-hover: 220ms !default;
+$transition-anim-fast: 300ms !default;
+$transition-anim: 400ms !default;
+$transition-long: 600ms !default;
+
+// darken
+$darken-ratio-low: 4% !default;
+$darken-ratio: 6% !default;
+
+//easing
+$ease-1: #{"cubic-bezier(0.32, 0.28, 0, 0.97)"} !default;
+
+//shadows
+$shadow-general: #{"0 .3rem .4rem 0 rgba(0, 0, 0, 0.05)"} !default;
+//$shadow-shallow: #{".0rem .1rem .2rem .0rem rgba(0, 0, 0, 0.1)"} !default;
+$shadow-input: #{"0 .2rem .2rem 0 rgba(2, 32, 101, 0.1)"} !default;
+//$shadow-big: #{".0rem .5rem 1.0rem .0rem rgba(0, 0, 0, 0.18)"} !default;
