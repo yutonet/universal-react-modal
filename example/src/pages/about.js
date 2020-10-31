@@ -17,6 +17,7 @@ const About = (props) => {
 				<h2>Demos</h2>
 				<p>
 					<button
+						className="link"
 						onClick={() => {openModal('example')}}>
 						Show me an example
 					</button>

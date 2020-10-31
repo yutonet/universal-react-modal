@@ -28,8 +28,9 @@
     h2 { font-size: 1.8em; }
 	h3 { font-size: 1.5em; }
 
-	a {
+	a, .link {
 		@include font-bold;
+		cursor: pointer;
 		text-decoration: underline;
 	}
 	

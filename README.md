@@ -1,8 +1,15 @@
 # universal-react-modal
 
-> Universal modals, unite...
+> React Modals, Made Simple and Customizable.
 
-<!-- [![NPM](https://img.shields.io/npm/v/universal-react-modal.svg)](https://www.npmjs.com/package/universal-react-modal) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) -->
+[![NPM](https://img.shields.io/npm/v/universal-react-modal.svg)](https://www.npmjs.com/package/universal-react-modal)
+<!-- [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) -->
+
+Universal React Modal (URM) is a highliy customizable modal controller component for React.js.
+
+URM provides developers better control on modal instances with multiple layers.
+
+To find out more, see our [plugin page](https://yutonet.github.io/universal-react-modal/#/universal-react-modal/) on GitHub pages.
 
 ## Installation
 
@@ -14,9 +21,9 @@ or
 npm install --save universal-react-modal
 ```
 
-## Usage
+## Getting Started
 
-Please refer to the 'example' project until I publish a major release with a proper documentation.
+Refer to the documentation for more.
 
 ```jsx
 import React from 'react'

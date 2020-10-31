@@ -5,7 +5,7 @@ const TextModal = (props) => {
 		<div className={props.className}>
 			{props.closeBtn}
 			<div className="modal-content">
-				{props.title && <h1 className="text-title">{props.title}</h1>}
+				{props.title && <h1 className="text-title" style={{marginBottom: '2rem'}}>{props.title}</h1>}
 				{props.content &&
 					<div className="text-content wysiwyg highlight-links">
 						{props.content ? props.content : false}
