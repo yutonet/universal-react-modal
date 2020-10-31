@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Deps
-import { BrowserRouter as Router, HashRouter, Switch, Route, Link, NavLink } from 'react-router-dom'
+import { HashRouter, Switch, Route, Link, NavLink } from 'react-router-dom'
 import { ModalController } from 'universal-react-modal'
 
 // Pages

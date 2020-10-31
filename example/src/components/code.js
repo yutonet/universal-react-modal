@@ -8,7 +8,7 @@ const Code = (props) => {
 	
 	useEffect(() => {
 		if(props.src) {
-			fetch('/examples/' + props.src).then((response) => {
+			fetch(process.env.PUBLIC_URL + '/examples/' + props.src).then((response) => {
 				if(response.ok){
 					response.text().then((text) => {
 						setCodeText(text);
