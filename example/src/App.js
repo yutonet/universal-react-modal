@@ -27,7 +27,7 @@ import 'universal-react-modal/scss/styles.scss'
 const DemoApp = () => {
 	// console.log(name);
 	return (
-		<Router>
+		<Router basename={process.env.PUBLIC_URL}>
 			<ModalController>
 				<ExampleModal />
 				<TextModal />
@@ -49,13 +49,11 @@ const DemoApp = () => {
 						{/* Soon... <NavLink to="/documentation">Documentation</NavLink> */}
 						<NavLink to="/demos">Demos</NavLink>
 						<a href="https://github.com/yutonet/universal-react-modal/" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+						<a href="https://www.npmjs.com/package/universal-react-modal" target="_blank" rel="noopener noreferrer">View on NPM</a>
 					</div>
 				</nav>
 
 				<Switch>
-					<Route path="/" exact>
-						<AboutPage />
-					</Route>
 					<Route path="/getting-started" exact>
 						<GettingStartedPage />
 					</Route>
@@ -64,6 +62,9 @@ const DemoApp = () => {
 					</Route>
 					<Route path="/demos" exact>
 						<DemosPage />
+					</Route>
+					<Route>
+						<AboutPage />
 					</Route>
 				</Switch>
 

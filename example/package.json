@@ -1,7 +1,7 @@
 {
   "name": "universal-react-modal-example",
-  "homepage": ".",
-  "version": "0.0.0",
+  "homepage": "/universal-react-modal",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
@@ -10,6 +10,7 @@
     "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
   },
   "dependencies": {
+    "history": "^5.0.0",
     "node-sass": "link:../node_modules/node-sass",
     "prism-react-renderer": "^1.1.1",
     "react": "link:../node_modules/react",
