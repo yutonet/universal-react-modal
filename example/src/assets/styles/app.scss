@@ -3,6 +3,8 @@
 @import 'normalize';
 @import 'wysiwyg';
 
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap');
+
 html {
 	font-size: 10px;
 }
@@ -58,6 +60,26 @@ body {
 				margin-left: 6rem;
 			}
 		}
+	}
+}
+
+.app-footer {
+	padding: 2rem 0;
+	text-align: center;
+	background-color: $color-bg;
+}
+
+.code-display {
+	.prism-code {
+		margin: 0 0;
+		padding: 2rem;
+		overflow: auto;
+	}
+
+	.display-loader {
+		background-color: $color-bg;
+		padding: 2rem;
+		text-align: center;
 	}
 }
 

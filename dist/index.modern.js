@@ -1,18 +1,57 @@
 import React from 'react';
 
-const openModal = (key, opts = {}) => {
-  const openEvent = new CustomEvent('openUniversalModal', {
-    detail: {
-      modal: key,
-      layer: 1,
-      ...opts
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
     }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+var openModal = function openModal(key, opts) {
+  if (opts === void 0) {
+    opts = {};
+  }
+
+  var openEvent = new CustomEvent('openUniversalModal', {
+    detail: _extends({
+      modal: key,
+      layer: 1
+    }, opts)
   });
   window.dispatchEvent(openEvent);
 };
 
-const closeModal = (layer = false) => {
-  const closeEvent = new CustomEvent('closeUniversalModal', {
+var closeModal = function closeModal(layer) {
+  if (layer === void 0) {
+    layer = false;
+  }
+
+  var closeEvent = new CustomEvent('closeUniversalModal', {
     detail: {
       layer: layer
     }
@@ -3924,9 +3963,13 @@ var omit = _flatRest(function(object, paths) {
 
 var omit_1 = omit;
 
-const blockOverflow = (block = true) => {
+var blockOverflow = function blockOverflow(block) {
+  if (block === void 0) {
+    block = true;
+  }
+
   if (block) {
-    let scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+    var scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
     document.documentElement.style.marginRight = scrollBarWidth + 'px';
     document.body.classList.add('urm-block-overflow');
   } else {
@@ -3935,78 +3978,92 @@ const blockOverflow = (block = true) => {
   }
 };
 
-class ModalController extends React.Component {
-  constructor(props) {
-    super(props);
-    this.emptyModalData = this.calculateEmptyModalData(props.layers);
-    this.modalClosed = this.modalClosed.bind(this);
-    this.modalOpened = this.modalOpened.bind(this);
-    this.state = {
-      modalData: this.emptyModalData
+var ModalController = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(ModalController, _React$Component);
+
+  function ModalController(props) {
+    var _this;
+
+    _this = _React$Component.call(this, props) || this;
+    _this.emptyModalData = _this.calculateEmptyModalData(props.layers);
+    _this.modalClosed = _this.modalClosed.bind(_assertThisInitialized(_this));
+    _this.modalOpened = _this.modalOpened.bind(_assertThisInitialized(_this));
+    _this.state = {
+      modalData: _this.emptyModalData
     };
+    return _this;
   }
 
-  calculateEmptyModalData(layerCount) {
-    let newData = [];
+  var _proto = ModalController.prototype;
 
-    for (let k = 0; k < layerCount; k++) {
+  _proto.calculateEmptyModalData = function calculateEmptyModalData(layerCount) {
+    var newData = [];
+
+    for (var k = 0; k < layerCount; k++) {
       newData.push(false);
     }
 
     return newData;
-  }
+  };
 
-  modalClosed() {
+  _proto.modalClosed = function modalClosed() {
     if (isEqual_1(this.state.modalData, this.emptyModalData)) {
       blockOverflow(false);
     }
-  }
+  };
 
-  modalOpened() {
+  _proto.modalOpened = function modalOpened() {
     blockOverflow(true);
-  }
+  };
 
-  componentDidMount() {
-    let vm = this;
-    window.addEventListener('openUniversalModal', e => {
+  _proto.componentDidMount = function componentDidMount() {
+    var _this2 = this;
+
+    var vm = this;
+    window.addEventListener('openUniversalModal', function (e) {
       if (!isEqual_1(vm.state.modalData[e.detail.layer - 1], e.detail)) {
-        let newData = [...vm.state.modalData];
+        var newData = [].concat(vm.state.modalData);
         newData[e.detail.layer - 1] = e.detail;
         vm.setState({
           modalData: newData
         });
       }
     }, false);
-    window.addEventListener('closeUniversalModal', e => {
+    window.addEventListener('closeUniversalModal', function (e) {
       vm.setState({
-        modalData: this.emptyModalData
+        modalData: _this2.emptyModalData
       });
     }, false);
-  }
+  };
 
-  componentWillUnmount() {
+  _proto.componentWillUnmount = function componentWillUnmount() {
     window.removeEventListener('openUniversalModal');
     window.removeEventListener('closeUniversalModal');
-  }
+  };
 
-  componentDidUpdate(prevProps, prevState) {
+  _proto.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
     if (prevProps.layers !== this.props.layers) {
       console.warn('Dynamic change of the amount of layers on the modals controller is not allowed.');
     }
-  }
+  };
 
-  render() {
-    return /*#__PURE__*/React.createElement(React.Fragment, null, this.state.modalData.map((data, nth) => /*#__PURE__*/React.createElement(ModalLayer, {
-      key: nth,
-      layer: nth + 1,
-      data: data,
-      closeBtn: this.props.defaultCloseBtn,
-      onClose: this.modalClosed,
-      onOpen: this.modalOpened
-    }, this.props.children)));
-  }
+  _proto.render = function render() {
+    var _this3 = this;
 
-}
+    return /*#__PURE__*/React.createElement(React.Fragment, null, this.state.modalData.map(function (data, nth) {
+      return /*#__PURE__*/React.createElement(ModalLayer, {
+        key: nth,
+        layer: nth + 1,
+        data: data,
+        closeBtn: _this3.props.defaultCloseBtn,
+        onClose: _this3.modalClosed,
+        onOpen: _this3.modalOpened
+      }, _this3.props.children);
+    }));
+  };
+
+  return ModalController;
+}(React.Component);
 
 ModalController.defaultProps = {
   defaultCloseBtn: /*#__PURE__*/React.createElement("button", {
@@ -4022,44 +4079,51 @@ ModalController.defaultProps = {
   layers: 2
 };
 
-class ModalLayer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+var ModalLayer = /*#__PURE__*/function (_React$Component2) {
+  _inheritsLoose(ModalLayer, _React$Component2);
+
+  function ModalLayer(props) {
+    var _this4;
+
+    _this4 = _React$Component2.call(this, props) || this;
+    _this4.state = {
       data: false,
       show: false,
       component: false
     };
-    this._mounted = false;
-    this.actionTimer = false;
-    this.closeModal = this.closeModal.bind(this);
-    this.getModalComponent = this.getModalComponent.bind(this);
-    this.clearActions = this.clearActions.bind(this);
-    this.closeBtn = React.cloneElement(props.closeBtn, {
-      onClick: this.closeModal
+    _this4._mounted = false;
+    _this4.actionTimer = false;
+    _this4.closeModal = _this4.closeModal.bind(_assertThisInitialized(_this4));
+    _this4.getModalComponent = _this4.getModalComponent.bind(_assertThisInitialized(_this4));
+    _this4.clearActions = _this4.clearActions.bind(_assertThisInitialized(_this4));
+    _this4.closeBtn = React.cloneElement(props.closeBtn, {
+      onClick: _this4.closeModal
     });
-    this.defaultOpts = {
+    _this4.defaultOpts = {
       modal: "",
       url: false,
       urlTitle: false,
-      closeBtn: this.closeBtn,
-      onClose: this.onClose,
+      closeBtn: _this4.closeBtn,
+      onClose: _this4.onClose,
       className: ""
     };
+    return _this4;
   }
 
-  componentDidMount() {
+  var _proto2 = ModalLayer.prototype;
+
+  _proto2.componentDidMount = function componentDidMount() {
     this._mounted = true;
-  }
+  };
 
-  componentWillUnmount() {
+  _proto2.componentWillUnmount = function componentWillUnmount() {
     this._mounted = false;
-  }
+  };
 
-  componentDidUpdate(prevProps, prevState) {
-    let vm = this;
+  _proto2.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
+    var vm = this;
 
-    const updateData = () => {
+    var updateData = function updateData() {
       vm.setState({
         component: vm.getModalComponent()
       });
@@ -4078,7 +4142,7 @@ class ModalLayer extends React.Component {
     };
 
     if (!isEqual_1(prevProps.data, vm.props.data)) {
-      let opts = vm.props.data === false ? false : extend({}, vm.defaultOpts, vm.props.data);
+      var opts = vm.props.data === false ? false : extend({}, vm.defaultOpts, vm.props.data);
 
       if (vm.state.show) {
         vm.clearActions();
@@ -4107,7 +4171,7 @@ class ModalLayer extends React.Component {
     if (!isEqual_1(prevState.data, vm.state.data)) {
       if (vm.actionTimer !== false) {
         vm.clearActions();
-        setTimeout(() => {
+        setTimeout(function () {
           if (vm._mounted) {
             updateData();
           }
@@ -4116,34 +4180,32 @@ class ModalLayer extends React.Component {
         updateData();
       }
     }
-  }
+  };
 
-  getModalComponent() {
-    let Component = false;
-    let vm = this;
+  _proto2.getModalComponent = function getModalComponent() {
+    var Component = false;
+    var vm = this;
 
     if (this.state.data) {
-      let props = omit_1(this.state.data, ['modal']);
-      let children = React.Children.toArray(this.props.children);
+      var props = omit_1(this.state.data, ['modal']);
+      var children = React.Children.toArray(this.props.children);
       props.className = 'modal-contentwrap ' + props.className;
 
       if (props.wide) {
         props.className += ' wide';
       }
 
-      let modalKey = { ...this.state.data
-      }['modal'];
+      var modalKey = _extends({}, this.state.data)['modal'];
 
-      props.close = event => {
+      props.close = function (event) {
         vm.closeModal(event, modalKey);
       };
 
-      for (let k = 0; k < children.length; k++) {
-        let item = children[k];
+      for (var k = 0; k < children.length; k++) {
+        var item = children[k];
 
         if (item.props.name === this.state.data.modal || item.type.props && item.type.props.name === this.state.data.modal) {
-          Component = React.cloneElement(item, { ...props
-          });
+          Component = React.cloneElement(item, _extends({}, props));
         }
       }
 
@@ -4153,18 +4215,23 @@ class ModalLayer extends React.Component {
     }
 
     return Component;
-  }
+  };
 
-  clearActions() {
+  _proto2.clearActions = function clearActions() {
     if (this.actionTimer !== false) {
       clearTimeout(this.actionTimer);
       this.actionTimer = false;
     }
-  }
+  };
 
-  closeModal(closeData, modalKey = false) {
+  _proto2.closeModal = function closeModal$1(closeData, modalKey) {
+    if (modalKey === void 0) {
+      modalKey = false;
+    }
+
     if (modalKey === false || modalKey === this.props.data.modal) {
-      let componentProps = this.state.component.type.props ? this.state.component.type.props : this.state.component.props;
+      var componentProps = this.state.component.type.props ? this.state.component.type.props : this.state.component.props;
+
       closeModal(this.props.layer);
 
       if (this.state.data.onClose) {
@@ -4175,13 +4242,13 @@ class ModalLayer extends React.Component {
         componentProps.onClose(closeData, this.state.data);
       }
     }
-  }
+  };
 
-  render() {
-    let Component = this.state.component;
+  _proto2.render = function render() {
+    var Component = this.state.component;
 
     if (Component) {
-      let props = Component.type.props ? Component.type.props : Component.props;
+      var props = Component.type.props ? Component.type.props : Component.props;
       return /*#__PURE__*/React.createElement("div", {
         className: "modal-container layer-" + this.props.layer + ' ' + props.containerClass + (this.state.show ? ' show' : '')
       }, /*#__PURE__*/React.createElement("div", {
@@ -4192,7 +4259,7 @@ class ModalLayer extends React.Component {
         className: "modal-overlay"
       }) : /*#__PURE__*/React.createElement("button", {
         className: "modal-overlay",
-        onClick: e => {
+        onClick: function onClick(e) {
           if (!props.preventClose) {
             props.close(e);
           }
@@ -4201,9 +4268,10 @@ class ModalLayer extends React.Component {
     } else {
       return false;
     }
-  }
+  };
 
-}
+  return ModalLayer;
+}(React.Component);
 
 ModalLayer.defaultProps = {
   top: false

@@ -80,6 +80,7 @@ $baseZ: 100;
 		overflow-y: auto;
 		width: 100%;
 		height: 100%;
+		backface-visibility: hidden;
 		-webkit-backface-visibility: hidden;
 	}
 
@@ -98,6 +99,7 @@ $baseZ: 100;
 		z-index: 2;
 		transform: translate3d(0, -.5rem, 0);
 		transition: opacity $transition-anim ease, transform $transition-anim-fast ease;
+		backface-visibility: hidden;
 		-webkit-backface-visibility: hidden;
 		margin: 8vh auto 5rem;
 		max-width: calc(100% - 3rem);

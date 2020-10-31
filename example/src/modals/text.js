@@ -17,9 +17,9 @@ const TextModal = (props) => {
 }
 
 TextModal.defaultProps = {
-	className: "",
-	containerClass: "modal-text",
 	name: "text",
+	containerClass: "modal-text",
+	className: "",
 	title: false,
 	content: false,
 }

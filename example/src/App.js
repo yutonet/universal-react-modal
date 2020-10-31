@@ -5,12 +5,14 @@ import { BrowserRouter as Router, Switch, Route, Link, NavLink } from 'react-rou
 import { ModalController } from 'universal-react-modal'
 
 // Pages
-import About from './pages/about'
-import Documentation from './pages/documentation'
-import Demos from './pages/demos'
+import AboutPage from './pages/about'
+import GettingStartedPage from './pages/getting-started'
+import DocumentationPage from './pages/documentation'
+import DemosPage from './pages/demos'
 
 // Demo Modals
-import TextModal from './demo-modals/text'
+import TextModal from './modals/text'
+import ExampleModal from './modals/example'
 
 // Assets
 import logo from './assets/logo.svg'
@@ -26,40 +28,50 @@ const DemoApp = () => {
 	// console.log(name);
 	return (
 		<Router>
-				<ModalController>
-					<TextModal />
-				</ModalController>
+			<ModalController>
+				<ExampleModal />
+				<TextModal />
+			</ModalController>
 
-				<div className="app-wrap">
-					<header className="app-header">
-						<div className="wrapper">
-							<Link to="/">
-								<img src={logo} className="header-logo" alt="logo" />
-							</Link>
-						</div>
-					</header>
+			<div className="app-wrap">
+				<header className="app-header">
+					<div className="wrapper">
+						<Link to="/">
+							<img src={logo} className="header-logo" alt="logo" />
+						</Link>
+					</div>
+				</header>
 
-					<nav className="app-nav">
-						<div className="wrapper nav-wrap">
-							<NavLink to="/" exact>About</NavLink>
-							<NavLink to="/documentation">Documentation</NavLink>
-							<NavLink to="/demos">Demos</NavLink>
-						</div>
-					</nav>
+				<nav className="app-nav">
+					<div className="wrapper nav-wrap">
+						<NavLink to="/" exact>About</NavLink>
+						<NavLink to="/getting-started">Getting Started</NavLink>
+						{/* Soon... <NavLink to="/documentation">Documentation</NavLink> */}
+						<NavLink to="/demos">Demos</NavLink>
+						<a href="https://github.com/yutonet/universal-react-modal/" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+					</div>
+				</nav>
 
-					<Switch>
-						<Route path="/" exact>
-							<About />
-						</Route>
-						<Route path="/documentation" exact>
-							<Documentation />
-						</Route>
-						<Route path="/demos" exact>
-							<Demos />
-						</Route>
-					</Switch>
-				</div>
-			</Router>
+				<Switch>
+					<Route path="/" exact>
+						<AboutPage />
+					</Route>
+					<Route path="/getting-started" exact>
+						<GettingStartedPage />
+					</Route>
+					<Route path="/documentation" exact>
+						<DocumentationPage />
+					</Route>
+					<Route path="/demos" exact>
+						<DemosPage />
+					</Route>
+				</Switch>
+
+				<footer className="app-footer">
+					MIT © Yunus Tabakoğlu, 2020
+				</footer>
+			</div>
+		</Router>
 	);
 }
 
