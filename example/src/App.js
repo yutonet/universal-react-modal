@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Deps
-import { BrowserRouter as Router, Switch, Route, Link, NavLink } from 'react-router-dom'
+import { BrowserRouter as Router, HashRouter, Switch, Route, Link, NavLink } from 'react-router-dom'
 import { ModalController } from 'universal-react-modal'
 
 // Pages
@@ -27,7 +27,7 @@ import 'universal-react-modal/scss/styles.scss'
 const DemoApp = () => {
 	// console.log(name);
 	return (
-		<Router basename={process.env.PUBLIC_URL}>
+		<HashRouter basename={process.env.PUBLIC_URL}>
 			<ModalController>
 				<ExampleModal />
 				<TextModal />
@@ -72,7 +72,7 @@ const DemoApp = () => {
 					MIT © Yunus Tabakoğlu, 2020
 				</footer>
 			</div>
-		</Router>
+		</HashRouter>
 	);
 }
 
