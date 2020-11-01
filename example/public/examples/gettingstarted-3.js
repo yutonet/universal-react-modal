@@ -21,6 +21,7 @@ const ExampleModal = (props) => {
 ExampleModal.defaultProps = {
     name: "example",
     containerClass: "modal-example",
+    preventClose: false,
 }
 
 export default ExampleModal

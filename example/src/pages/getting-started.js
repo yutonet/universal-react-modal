@@ -21,7 +21,7 @@ const GettingStarted = (props) => {
 
                 <p>The modal component is a simple React.js component with some distinct props.</p>
                 <h4>./modals/example.js</h4>
-                <Code src='gettingstarted-2.js' />
+                <Code src='gettingstarted-3.js' />
 			</div>
 		</main>
 	)

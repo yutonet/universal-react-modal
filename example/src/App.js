@@ -13,6 +13,7 @@ import DemosPage from './pages/demos'
 // Demo Modals
 import TextModal from './modals/text'
 import ExampleModal from './modals/example'
+import MultiLayerModal from './modals/multi-layer'
 
 // Assets
 import logo from './assets/logo.svg'
@@ -31,6 +32,7 @@ const DemoApp = () => {
 			<ModalController>
 				<ExampleModal />
 				<TextModal />
+				<MultiLayerModal />
 			</ModalController>
 
 			<div className="app-wrap">
@@ -46,7 +48,7 @@ const DemoApp = () => {
 					<div className="wrapper nav-wrap">
 						<NavLink to="/" exact>About</NavLink>
 						<NavLink to="/getting-started">Getting Started</NavLink>
-						{/* Soon... <NavLink to="/documentation">Documentation</NavLink> */}
+						<NavLink to="/documentation">Documentation</NavLink>
 						<NavLink to="/demos">Demos</NavLink>
 						<a href="https://github.com/yutonet/universal-react-modal/" target="_blank" rel="noopener noreferrer">View on GitHub</a>
 						<a href="https://www.npmjs.com/package/universal-react-modal" target="_blank" rel="noopener noreferrer">View on NPM</a>

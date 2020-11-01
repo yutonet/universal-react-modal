@@ -1,14 +1,13 @@
-import React from 'react';
+import React from 'react'
 
 // Deps
-import { closeModal } from './utils';
-import isEqual from 'lodash/isEqual';
-import extend from 'lodash/extend';
-import omit from 'lodash/omit';
+import { closeModal } from './utils'
+import isEqual from 'lodash/isEqual'
+import extend from 'lodash/extend'
+import omit from 'lodash/omit'
 
 // Functions
 import blockOverflow from './functions/block-overflow'
-
 
 class ModalController extends React.Component {
 	constructor(props){
@@ -54,7 +53,11 @@ class ModalController extends React.Component {
 		}, false);
 
 		window.addEventListener('closeUniversalModal', (e) => {
-			vm.setState({modalData: this.emptyModalData})
+			let newModalData = [...vm.state.modalData];
+
+			newModalData[e.detail.layer - 1] = false;
+
+			vm.setState({modalData: newModalData});
 		}, false);
 	}
 
@@ -116,8 +119,6 @@ class ModalLayer extends React.Component {
 
 		this.defaultOpts = {
 			modal: "",
-			url: false,
-			urlTitle: false,
 			closeBtn: this.closeBtn,
 			onClose: this.onClose,
 			className: "",
@@ -197,14 +198,14 @@ class ModalLayer extends React.Component {
 			let modalKey = {...this.state.data}['modal'];
 			props.close = (event) => { vm.closeModal(event, modalKey); }
 
-            for(let k = 0; k < children.length; k++){
-                let item = children[k];
-                if(item.props.name === this.state.data.modal || (item.type.props && item.type.props.name === this.state.data.modal)){
-                    Component = React.cloneElement(
-                        item, {...props}
-                    );
-                }
-            }
+			for(let k = 0; k < children.length; k++){
+				let item = children[k];
+				if(item.props.name === this.state.data.modal || (item.type.props && item.type.props.name === this.state.data.modal)){
+					Component = React.cloneElement(
+						item, {...props}
+					);
+				}
+			}
 
 			if(Component === false){
 				console.warn('Modals Error: Modal "'+this.state.data.modal+'" not found.')
@@ -229,7 +230,7 @@ class ModalLayer extends React.Component {
 			if(this.state.data.onClose){
 				this.state.data.onClose(closeData, this.state.data);
 			}
-			if(componentProps.onClose){
+			else if(componentProps.onClose){
 				componentProps.onClose(closeData, this.state.data);
 			}
 		}
@@ -259,10 +260,6 @@ class ModalLayer extends React.Component {
 			return false;
 		}
 	}
-}
-
-ModalLayer.defaultProps = {
-	top: false,
 }
 
 export default ModalController

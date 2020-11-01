@@ -7,7 +7,10 @@ const Code = (props) => {
 	const [codeText, setCodeText] = useState(false);
 	
 	useEffect(() => {
-		if(props.src) {
+		if(props.content) {
+			setCodeText(props.content);
+		}
+		else if(props.src) {
 			fetch(process.env.PUBLIC_URL + '/examples/' + props.src).then((response) => {
 				if(response.ok){
 					response.text().then((text) => {
@@ -16,14 +19,22 @@ const Code = (props) => {
 				}
 			})
 		}
-	}, [props.src])
+	}, [props.src, props.content])
+
+	const highlightProps = {
+		...defaultProps,
+		theme: codeTheme,
+		language: 'jsx',
+		code: codeText,
+	}
 
 	return (
 		<div className="code-display">
 			{codeText === false ?
 				<div className="display-loader">...</div>
 				:
-				<Highlight {...defaultProps} theme={codeTheme} code={codeText} language="jsx">
+				<Highlight
+					{...highlightProps}>
 					{({ className, style, tokens, getLineProps, getTokenProps }) => (
 						<pre className={className} style={style}>
 							{tokens.map((line, i) => (

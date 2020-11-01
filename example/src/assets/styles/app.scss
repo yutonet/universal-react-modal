@@ -70,6 +70,7 @@ body {
 }
 
 .code-display {
+	font-size: 1.3rem;
 	.prism-code {
 		margin: 0 0;
 		padding: 2rem;
@@ -85,4 +86,16 @@ body {
 
 .page {
 	padding: 4rem 0;
+}
+
+.modal-container {
+	&.modal-multi-layer {
+		.modal-contentwrap {
+			width: 90rem;
+		}
+
+		.modal-content {
+			padding: 8rem;
+		}
+	}
 }

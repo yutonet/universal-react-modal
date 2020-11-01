@@ -4019,8 +4019,6 @@ var ModalController = /*#__PURE__*/function (_React$Component) {
   };
 
   _proto.componentDidMount = function componentDidMount() {
-    var _this2 = this;
-
     var vm = this;
     window.addEventListener('openUniversalModal', function (e) {
       if (!isEqual_1(vm.state.modalData[e.detail.layer - 1], e.detail)) {
@@ -4032,8 +4030,10 @@ var ModalController = /*#__PURE__*/function (_React$Component) {
       }
     }, false);
     window.addEventListener('closeUniversalModal', function (e) {
+      var newModalData = [].concat(vm.state.modalData);
+      newModalData[e.detail.layer - 1] = false;
       vm.setState({
-        modalData: _this2.emptyModalData
+        modalData: newModalData
       });
     }, false);
   };
@@ -4050,17 +4050,17 @@ var ModalController = /*#__PURE__*/function (_React$Component) {
   };
 
   _proto.render = function render() {
-    var _this3 = this;
+    var _this2 = this;
 
     return /*#__PURE__*/React.createElement(React.Fragment, null, this.state.modalData.map(function (data, nth) {
       return /*#__PURE__*/React.createElement(ModalLayer, {
         key: nth,
         layer: nth + 1,
         data: data,
-        closeBtn: _this3.props.defaultCloseBtn,
-        onClose: _this3.modalClosed,
-        onOpen: _this3.modalOpened
-      }, _this3.props.children);
+        closeBtn: _this2.props.defaultCloseBtn,
+        onClose: _this2.modalClosed,
+        onOpen: _this2.modalOpened
+      }, _this2.props.children);
     }));
   };
 
@@ -4085,31 +4085,29 @@ var ModalLayer = /*#__PURE__*/function (_React$Component2) {
   _inheritsLoose(ModalLayer, _React$Component2);
 
   function ModalLayer(props) {
-    var _this4;
+    var _this3;
 
-    _this4 = _React$Component2.call(this, props) || this;
-    _this4.state = {
+    _this3 = _React$Component2.call(this, props) || this;
+    _this3.state = {
       data: false,
       show: false,
       component: false
     };
-    _this4._mounted = false;
-    _this4.actionTimer = false;
-    _this4.closeModal = _this4.closeModal.bind(_assertThisInitialized(_this4));
-    _this4.getModalComponent = _this4.getModalComponent.bind(_assertThisInitialized(_this4));
-    _this4.clearActions = _this4.clearActions.bind(_assertThisInitialized(_this4));
-    _this4.closeBtn = React.cloneElement(props.closeBtn, {
-      onClick: _this4.closeModal
+    _this3._mounted = false;
+    _this3.actionTimer = false;
+    _this3.closeModal = _this3.closeModal.bind(_assertThisInitialized(_this3));
+    _this3.getModalComponent = _this3.getModalComponent.bind(_assertThisInitialized(_this3));
+    _this3.clearActions = _this3.clearActions.bind(_assertThisInitialized(_this3));
+    _this3.closeBtn = React.cloneElement(props.closeBtn, {
+      onClick: _this3.closeModal
     });
-    _this4.defaultOpts = {
+    _this3.defaultOpts = {
       modal: "",
-      url: false,
-      urlTitle: false,
-      closeBtn: _this4.closeBtn,
-      onClose: _this4.onClose,
+      closeBtn: _this3.closeBtn,
+      onClose: _this3.onClose,
       className: ""
     };
-    return _this4;
+    return _this3;
   }
 
   var _proto2 = ModalLayer.prototype;
@@ -4238,9 +4236,7 @@ var ModalLayer = /*#__PURE__*/function (_React$Component2) {
 
       if (this.state.data.onClose) {
         this.state.data.onClose(closeData, this.state.data);
-      }
-
-      if (componentProps.onClose) {
+      } else if (componentProps.onClose) {
         componentProps.onClose(closeData, this.state.data);
       }
     }
@@ -4274,10 +4270,6 @@ var ModalLayer = /*#__PURE__*/function (_React$Component2) {
 
   return ModalLayer;
 }(React.Component);
-
-ModalLayer.defaultProps = {
-  top: false
-};
 
 exports.ModalController = ModalController;
 exports.closeModal = closeModal;

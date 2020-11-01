@@ -1,6 +1,6 @@
 {
   "name": "universal-react-modal-example",
-  "homepage": "/universal-react-modal",
+  "homepage": ".",
   "version": "0.1.2",
   "private": true,
   "scripts": {

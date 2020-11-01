@@ -8,7 +8,7 @@ const TextModal = (props) => {
 				{props.title && <h1 className="text-title" style={{marginBottom: '2rem'}}>{props.title}</h1>}
 				{props.content &&
 					<div className="text-content wysiwyg highlight-links">
-						{props.content ? props.content : false}
+						{props.content}
 					</div>
 				}
 			</div>

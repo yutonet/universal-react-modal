@@ -89,6 +89,9 @@ ExampleModal.defaultProps = {
 export default ExampleModal
 ```
 
+## Documentation
+[See the Documentation](https://yutonet.github.io/universal-react-modal/#/documentation/) on GitHub pages.
+
 ## License
 
 MIT © [yutonet](https://github.com/yutonet)
