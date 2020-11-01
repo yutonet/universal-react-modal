@@ -28,7 +28,7 @@ import 'universal-react-modal/scss/styles.scss'
 const DemoApp = () => {
 	// console.log(name);
 	return (
-		<HashRouter basename={process.env.PUBLIC_URL}>
+		<HashRouter>
 			<ModalController>
 				<ExampleModal />
 				<TextModal />
