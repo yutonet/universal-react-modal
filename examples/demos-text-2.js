@@ -11,7 +11,7 @@ const TextModal = (props) => {
                 {/* Render content if available */}
                 {props.content &&
                     <div className="text-content wysiwyg highlight-links">
-                        {props.content ? props.content : false}
+                        {props.content}
                     </div>
                 }
             </div>
