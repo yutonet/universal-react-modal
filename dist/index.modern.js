@@ -3988,6 +3988,8 @@ var ModalController = /*#__PURE__*/function (_React$Component) {
     _this.emptyModalData = _this.calculateEmptyModalData(props.layers);
     _this.modalClosed = _this.modalClosed.bind(_assertThisInitialized(_this));
     _this.modalOpened = _this.modalOpened.bind(_assertThisInitialized(_this));
+    _this.openModalFunct = _this.openModalFunct.bind(_assertThisInitialized(_this));
+    _this.closeModalFunct = _this.closeModalFunct.bind(_assertThisInitialized(_this));
     _this.state = {
       modalData: _this.emptyModalData
     };
@@ -3995,6 +3997,27 @@ var ModalController = /*#__PURE__*/function (_React$Component) {
   }
 
   var _proto = ModalController.prototype;
+
+  _proto.openModalFunct = function openModalFunct(e) {
+    var vm = this;
+
+    if (!isEqual_1(vm.state.modalData[e.detail.layer - 1], e.detail)) {
+      var newData = [].concat(vm.state.modalData);
+      newData[e.detail.layer - 1] = e.detail;
+      vm.setState({
+        modalData: newData
+      });
+    }
+  };
+
+  _proto.closeModalFunct = function closeModalFunct(e) {
+    var vm = this;
+    var newModalData = [].concat(vm.state.modalData);
+    newModalData[e.detail.layer - 1] = false;
+    vm.setState({
+      modalData: newModalData
+    });
+  };
 
   _proto.calculateEmptyModalData = function calculateEmptyModalData(layerCount) {
     var newData = [];
@@ -4017,28 +4040,13 @@ var ModalController = /*#__PURE__*/function (_React$Component) {
   };
 
   _proto.componentDidMount = function componentDidMount() {
-    var vm = this;
-    window.addEventListener('openUniversalModal', function (e) {
-      if (!isEqual_1(vm.state.modalData[e.detail.layer - 1], e.detail)) {
-        var newData = [].concat(vm.state.modalData);
-        newData[e.detail.layer - 1] = e.detail;
-        vm.setState({
-          modalData: newData
-        });
-      }
-    }, false);
-    window.addEventListener('closeUniversalModal', function (e) {
-      var newModalData = [].concat(vm.state.modalData);
-      newModalData[e.detail.layer - 1] = false;
-      vm.setState({
-        modalData: newModalData
-      });
-    }, false);
+    window.addEventListener('openUniversalModal', this.openModalFunct, false);
+    window.addEventListener('closeUniversalModal', this.closeModalFunct, false);
   };
 
   _proto.componentWillUnmount = function componentWillUnmount() {
-    window.removeEventListener('openUniversalModal');
-    window.removeEventListener('closeUniversalModal');
+    window.removeEventListener('openUniversalModal', this.openModalFunct);
+    window.removeEventListener('closeUniversalModal', this.closeModalFunct);
   };
 
   _proto.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {

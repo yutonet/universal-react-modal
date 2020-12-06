@@ -16,10 +16,30 @@ class ModalController extends React.Component {
 		this.emptyModalData = this.calculateEmptyModalData(props.layers);
 		this.modalClosed = this.modalClosed.bind(this);
 		this.modalOpened = this.modalOpened.bind(this);
+		this.openModalFunct = this.openModalFunct.bind(this);
+		this.closeModalFunct = this.closeModalFunct.bind(this);
 
 		this.state = {
 			modalData: this.emptyModalData,
 		}
+	}
+
+	openModalFunct(e) {
+		let vm = this;
+		if (!isEqual(vm.state.modalData[e.detail.layer - 1], e.detail)) {
+			let newData = [...vm.state.modalData];
+			newData[e.detail.layer - 1] = e.detail;
+			vm.setState({ modalData: newData })
+		}
+	}
+
+	closeModalFunct(e) {
+		let vm = this;
+		let newModalData = [...vm.state.modalData];
+
+		newModalData[e.detail.layer - 1] = false;
+
+		vm.setState({ modalData: newModalData });
 	}
 
 	calculateEmptyModalData (layerCount) {
@@ -43,27 +63,14 @@ class ModalController extends React.Component {
 	}
 	
 	componentDidMount() {
-		let vm = this;
-		window.addEventListener('openUniversalModal', (e) => {
-			if(!isEqual(vm.state.modalData[e.detail.layer -1], e.detail)){
-				let newData = [...vm.state.modalData];
-				newData[e.detail.layer -1] = e.detail;
-				vm.setState({modalData: newData})
-			}
-		}, false);
+		window.addEventListener('openUniversalModal', this.openModalFunct, false);
 
-		window.addEventListener('closeUniversalModal', (e) => {
-			let newModalData = [...vm.state.modalData];
-
-			newModalData[e.detail.layer - 1] = false;
-
-			vm.setState({modalData: newModalData});
-		}, false);
+		window.addEventListener('closeUniversalModal', this.closeModalFunct, false);
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener('openUniversalModal');
-		window.removeEventListener('closeUniversalModal');
+		window.removeEventListener('openUniversalModal', this.openModalFunct);
+		window.removeEventListener('closeUniversalModal', this.closeModalFunct);
 	}
 
 	componentDidUpdate(prevProps, prevState) {
