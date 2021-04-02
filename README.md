@@ -5,7 +5,7 @@
 [![NPM](https://img.shields.io/npm/v/universal-react-modal.svg)](https://www.npmjs.com/package/universal-react-modal)
 <!-- [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) -->
 
-Universal React Modal (URM) is a highliy customizable modal controller component for React.js.
+Universal React Modal (URM) is a highly customizable modal controller component for React.js.
 
 URM provides developers better control on modal instances with multiple layers.
 
