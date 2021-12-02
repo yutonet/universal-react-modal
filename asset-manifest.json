@@ -1,23 +1,21 @@
 {
   "files": {
-    "main.css": "/universal-react-modal/static/css/main.cf434eec.chunk.css",
-    "main.js": "/universal-react-modal/static/js/main.7931cbb0.chunk.js",
-    "main.js.map": "/universal-react-modal/static/js/main.7931cbb0.chunk.js.map",
-    "runtime-main.js": "/universal-react-modal/static/js/runtime-main.98c35a87.js",
-    "runtime-main.js.map": "/universal-react-modal/static/js/runtime-main.98c35a87.js.map",
-    "static/js/2.06bae57a.chunk.js": "/universal-react-modal/static/js/2.06bae57a.chunk.js",
-    "static/js/2.06bae57a.chunk.js.map": "/universal-react-modal/static/js/2.06bae57a.chunk.js.map",
+    "main.css": "/universal-react-modal/static/css/main.6c16a156.chunk.css",
+    "main.js": "/universal-react-modal/static/js/main.4479158e.chunk.js",
+    "main.js.map": "/universal-react-modal/static/js/main.4479158e.chunk.js.map",
+    "runtime-main.js": "/universal-react-modal/static/js/runtime-main.bac43cf8.js",
+    "runtime-main.js.map": "/universal-react-modal/static/js/runtime-main.bac43cf8.js.map",
+    "static/js/2.958b6f7d.chunk.js": "/universal-react-modal/static/js/2.958b6f7d.chunk.js",
+    "static/js/2.958b6f7d.chunk.js.map": "/universal-react-modal/static/js/2.958b6f7d.chunk.js.map",
     "index.html": "/universal-react-modal/index.html",
-    "precache-manifest.46193d53b8d60be1c11b486437944bcb.js": "/universal-react-modal/precache-manifest.46193d53b8d60be1c11b486437944bcb.js",
-    "service-worker.js": "/universal-react-modal/service-worker.js",
-    "static/css/main.cf434eec.chunk.css.map": "/universal-react-modal/static/css/main.cf434eec.chunk.css.map",
-    "static/js/2.06bae57a.chunk.js.LICENSE.txt": "/universal-react-modal/static/js/2.06bae57a.chunk.js.LICENSE.txt",
-    "static/media/logo.svg": "/universal-react-modal/static/media/logo.0c437b4c.svg"
+    "static/css/main.6c16a156.chunk.css.map": "/universal-react-modal/static/css/main.6c16a156.chunk.css.map",
+    "static/js/2.958b6f7d.chunk.js.LICENSE.txt": "/universal-react-modal/static/js/2.958b6f7d.chunk.js.LICENSE.txt",
+    "static/media/logo.909c77cd.svg": "/universal-react-modal/static/media/logo.909c77cd.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.98c35a87.js",
-    "static/js/2.06bae57a.chunk.js",
-    "static/css/main.cf434eec.chunk.css",
-    "static/js/main.7931cbb0.chunk.js"
+    "static/js/runtime-main.bac43cf8.js",
+    "static/js/2.958b6f7d.chunk.js",
+    "static/css/main.6c16a156.chunk.css",
+    "static/js/main.4479158e.chunk.js"
   ]
 }
