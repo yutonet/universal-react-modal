@@ -10,15 +10,13 @@
     "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
   },
   "dependencies": {
-    "node-sass": "link:../node_modules/node-sass",
-    "prism-react-renderer": "^1.1.1",
+    "sass": "link:../node_modules/sass",
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
-    "react-redux": "^7.2.1",
-    "react-router-dom": "^5.2.0",
     "react-scripts": "link:../node_modules/react-scripts",
-    "redux": "^4.0.5",
-    "universal-react-modal": "link:.."
+    "universal-react-modal": "link:..",
+    "react-router-dom": "^5.2.0",
+    "prism-react-renderer": "^1.1.1"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
